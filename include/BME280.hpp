@@ -1,27 +1,24 @@
 #ifndef BME280_HPP_
 #define BME280_HPP_
 
-#include <Wire.h>
-
-#define BME280_ADDRESS 0x76
+#include <stdint.h>
 
 class BME280 {
 public:
-    BME280(void);
-
-    virtual ~BME280();
+    BME280(){};
+    BME280(uint8_t i2caddr):device_i2c_address(i2caddr){};
+    ~BME280(){};
 
     void initialize(void);
 
-    double readTemperature(void);
-
-    double readPressure(void);
-
-    double readHumidity(void);
+    float readTempDeg(void);
+    float readPreshPa(void);
+    float readHumidPcnt(void);
 
 private:
-    signed long int t_fine;
+    int64_t pre_temp;
 
+    /* Trim Data */
     uint16_t dig_T1;
     int16_t dig_T2;
     int16_t dig_T3;
@@ -41,7 +38,6 @@ private:
     int16_t dig_H5;
     int8_t dig_H6;
 
-    void writeReg(uint8_t reg_address, uint8_t data);
     void readTrim(void);
 
 protected:
@@ -51,9 +47,6 @@ protected:
     virtual void doInit()                                              = 0;
     virtual void doRead(uint8_t r_addr, uint8_t *r_buf, uint32_t size) = 0;
     virtual void doWrite(uint8_t w_addr, uint8_t w_data)               = 0;
-
-    /* タイムアウト用カウント */
-    virtual int nowMs() = 0;
 };
 
 #endif // MBED_BME280_H

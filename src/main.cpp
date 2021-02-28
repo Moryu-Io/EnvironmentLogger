@@ -134,21 +134,21 @@ void loop() {
     // M5.Lcd.println(_co2_str);
 
     /* 気温取得 */
-    float _temp_f = (float)p_bme280->readTemperature();
+    float _temp_f = (float)p_bme280->readTempDeg();
     _temp_str     = "temp  : ";
     _temp_str += String(_temp_f);
     _temp_str += String(" [deg]");
     // M5.Lcd.println(_temp_str);
 
     /* 気圧取得 */
-    float _press_f = (float)p_bme280->readPressure();
+    float _press_f = (float)p_bme280->readPreshPa();
     _pres_str      = "press : ";
     _pres_str += String(_press_f);
     _pres_str += String(" [hPa]");
     // M5.Lcd.println(_pres_str);
 
     /* 湿度取得 */
-    float _hum_f = (float)p_bme280->readHumidity();
+    float _hum_f = (float)p_bme280->readHumidPcnt();
     _hum_str     = "humd  : ";
     _hum_str += String(_hum_f);
     _hum_str += String(" [%]");

@@ -8,12 +8,12 @@ private:
     HardwareSerial *hw_serial;
 
 protected:
-    void doInit() { hw_serial->begin(9600); };
-    int checkReadableDataNum() { return hw_serial->available(); };
+    void doInit() override { hw_serial->begin(9600); };
+    int checkReadableDataNum() override { return hw_serial->available(); };
 
-    void doFlush() { hw_serial->flush(); }
+    void doFlush() override { hw_serial->flush(); }
 
-    int doRead(uint8_t *rbuf, uint32_t size) {
+    int doRead(uint8_t *rbuf, uint32_t size) override {
         int i = 0;
         for(i = 0; i < size; i++) {
             rbuf[i] = hw_serial->read();
@@ -21,11 +21,11 @@ protected:
         return i;
     }
 
-    void doWrite(const uint8_t *tbuf, uint32_t size) {
+    void doWrite(const uint8_t *tbuf, uint32_t size) override {
         hw_serial->write(tbuf, size);
     }
 
-    int nowMs() { return millis(); }
+    int nowMs() override { return millis(); }
 };
 
 static HardwareSerial HW_Serial(2);
@@ -41,13 +41,13 @@ private:
     TwoWire *p_wire;
 
 protected:
-    void doInit() {
+    void doInit() override {
         p_wire->begin();
         pinMode(21, INPUT_PULLUP);
         pinMode(22, INPUT_PULLUP);
     };
 
-    void doRead(uint8_t r_addr, uint8_t *r_buf, uint32_t size) {
+    void doRead(uint8_t r_addr, uint8_t *r_buf, uint32_t size) override {
         p_wire->beginTransmission(device_i2c_address);
         p_wire->write(r_addr);
         p_wire->endTransmission();
@@ -59,14 +59,12 @@ protected:
         }
     }
 
-    void doWrite(uint8_t w_addr, uint8_t w_data) {
+    void doWrite(uint8_t w_addr, uint8_t w_data) override {
         p_wire->beginTransmission(device_i2c_address);
         p_wire->write(w_addr);
         p_wire->write(w_data);
         p_wire->endTransmission();
     }
-
-    int nowMs() { return millis(); }
 };
 
 static BME280_m5stack bme280(&Wire);
