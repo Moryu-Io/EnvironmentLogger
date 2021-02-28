@@ -1,0 +1,9 @@
+BasedOnStyle: LLVM
+SpaceBeforeParens: Never
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine : true
+AlignConsecutiveAssignments : true
+AccessModifierOffset: -4
+IndentWidth: 4
+TabWidth: 4
