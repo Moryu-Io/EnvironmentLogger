@@ -28,11 +28,6 @@ protected:
     int nowMs() override { return millis(); }
 };
 
-static HardwareSerial HW_Serial(2);
-static MH_Z14_m5stack mh_z14(&HW_Serial);
-
-MH_Z14 *get_ptr_mhz14() { return (MH_Z14 *)&mh_z14; };
-
 class BME280_m5stack : BME280 {
 public:
     BME280_m5stack(TwoWire *wire) : p_wire(wire){};
@@ -67,6 +62,9 @@ protected:
     }
 };
 
+static HardwareSerial HW_Serial(2);
+static MH_Z14_m5stack mh_z14(&HW_Serial);
 static BME280_m5stack bme280(&Wire);
 
+MH_Z14 *get_ptr_mhz14() { return (MH_Z14 *)&mh_z14; };
 BME280 *get_ptr_bme280() { return (BME280 *)&bme280; };
